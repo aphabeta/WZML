@@ -174,7 +174,7 @@ MIRROR_LOG_ID = ""
 
 # qBittorrent/Aria2c
 TORRENT_TIMEOUT = 0
-BASE_URL = "http://152.42.205.93"
+BASE_URL = "http://45.77.34.248"
 BASE_URL_PORT = 0
 WEB_PINCODE = True
 
