@@ -394,6 +394,13 @@ async def add_handlers():
         )
     )
     TgClient.bot.add_handler(
+        MessageHandler(
+            lock_my_session,
+            filters=command(BotCommands.LockSessionCommand, case_sensitive=True)
+            & CustomFilters.authorized,
+        )
+    )
+    TgClient.bot.add_handler(
         CallbackQueryHandler(edit_user_settings, filters=regex("^userset"))
     )
     TgClient.bot.add_handler(
@@ -475,9 +482,25 @@ async def add_handlers():
                 9,
             )
 
+        if not Config.DISABLE_STREAM:
+            BOT_COMMANDS = insert_at(
+                BOT_COMMANDS,
+                "Stream",
+                "[link/file] Stream or get playlist download links",
+                10,
+            )
+
         if Config.LOGIN_PASS:
             BOT_COMMANDS = insert_at(
                 BOT_COMMANDS, "Login", "[password] Login to Bot", 14
+            )
+
+        if not Config.DISABLE_PLUGINS:
+            BOT_COMMANDS = insert_at(
+                BOT_COMMANDS,
+                "Plugins",
+                "[SUDO] Manage user plugins",
+                len(BOT_COMMANDS),
             )
 
         await TgClient.bot.set_bot_commands(
